@@ -6,6 +6,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Debug (Launch)-EnvioTest1",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "enviodecorreos.EnvioTest1",
+            "projectName": "EnvioCorreosPracticum",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch)-PruebaPreliminar03<PruebasPreliminaresEnvioCorreosPracticum>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
