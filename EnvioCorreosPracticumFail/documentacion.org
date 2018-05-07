@@ -1,5 +1,0 @@
-* Cosas que deben ser hechas
-** 1
-1. Mail al alumno, enviando su tutor académico
-2. Mail al tutor académico, avisando sus alumnos
-Todo eso sale de la tabla "alumnos con destino"
