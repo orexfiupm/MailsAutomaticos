@@ -95,4 +95,4 @@ PruebasPreliminaresEnvioCorreosPracticum/bin/pruebaPreliminar/PruebaPreliminar01
 .metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history.lucene60/write.lock
 /.metadata/
 /.recommenders/
-.class
+*.class
