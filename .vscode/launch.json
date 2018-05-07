@@ -6,6 +6,28 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Debug (Launch)-PruebaPreliminar03<PruebasPreliminaresEnvioCorreosPracticum>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "pruebaPreliminar.PruebaPreliminar03Excel",
+            "projectName": "PruebasPreliminaresEnvioCorreosPracticum",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-PruebaPreliminar02<PruebasPreliminaresEnvioCorreosPracticum>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "pruebaPreliminar.PruebaPreliminar02ExcelConnector",
+            "projectName": "PruebasPreliminaresEnvioCorreosPracticum",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch)-PruebaPreliminar01<PruebasPreliminaresEnvioCorreosPracticum>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
