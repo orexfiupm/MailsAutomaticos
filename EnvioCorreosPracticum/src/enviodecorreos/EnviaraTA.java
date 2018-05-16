@@ -10,14 +10,15 @@ import datos.*;
 
 public class EnviaraTA {
 	private static ParserConfiguracion pc;
+	private static String mandatoThunderbird;
 
 	public static void main(String[] args) {
-		String inputFile = args[1];
-		String inputFileConf = args[0];
+		mandatoThunderbird = args[0];
+		String inputFile = args[2];
+		String inputFileConf = args[1];
 		BaseDeAlumnos bDeAlumnos = new BaseDeAlumnos();
-		
-		System.out.println("Working Directory = " +
-	              System.getProperty("user.dir"));
+
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
 		try {
 			bDeAlumnos.getAlumnosConDestinoFromFile(inputFile);
@@ -47,13 +48,16 @@ public class EnviaraTA {
 
 		System.out.println("TA: " + tAcademico.getNombre() + "\nCorreo:\n" + bodyText);
 
-		try {
-			Runtime.getRuntime()
-					.exec(new String[] { "thunderbird", "-compose", "to='" + tAcademico.getEmail() + "'," + "subject='"
-							+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
-		} catch (IOException e1) {
-			System.out.println("IOException");
-			e1.printStackTrace();
-		}
+//		try {
+			// Runtime.getRuntime()
+			// 		.exec(new String[] { "thunderbird", "-compose", "to='" + tAcademico.getEmail() + "'," + "subject='"
+			// 				+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
+//			Runtime.getRuntime()
+//					.exec(new String[] { mandatoThunderbird, "-compose", "to='" + tAcademico.getEmail() + "'," + "subject='"
+//							+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
+//		} catch (IOException e1) {
+//			System.out.println("IOException");
+//			e1.printStackTrace();
+//		}
 	}
 }

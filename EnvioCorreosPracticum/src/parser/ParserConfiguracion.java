@@ -1,9 +1,11 @@
 package parser;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 
 import datos.Alumno;
@@ -12,14 +14,18 @@ import datos.TutorProfesional;
 
 public class ParserConfiguracion {
     private String adjuntos;
-    private String tablasPath;
     private String texto;
     private String asunto;
 
     public ParserConfiguracion(String path) throws FileNotFoundException {
-        BufferedReader bf = new BufferedReader(new FileReader(path));
-        try {
+        // BufferedReader bf = new BufferedReader(new FileReader(path));
+        BufferedReader bf;
+		try {
+            // bf = new BufferedReader(new InputStreamReader(new FileInputStream(path), "CP1252"));
+            bf = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             parseConfig(bf);
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,10 +33,6 @@ public class ParserConfiguracion {
 
     public String getAdjuntos() {
         return this.adjuntos;
-    }
-
-    public String getTablasSource() {
-        return this.tablasPath;
     }
 
     public String getTexto() {
@@ -44,11 +46,7 @@ public class ParserConfiguracion {
     private void parseConfig(BufferedReader bf) throws IOException {
         String line;
         while ((line = bf.readLine()) != null) {
-            if (line.startsWith("RUTA_HOJA_PRACTICUM:")) {
-                // Tenemos en esta línea la tablaPath
-                String path = line.replace("RUTA_HOJA_PRACTICUM:", "").trim();
-                this.tablasPath = path;
-            } else if (line.startsWith("ADJUNTOS:")) {
+            if (line.startsWith("ADJUNTOS:")) {
                 String[] adjuntos = line.replace("ADJUNTOS:", "").trim().split(",");
                 for (String s : adjuntos) {
                     s = "file://" + (s.trim());
