@@ -12,28 +12,28 @@ import jxl.read.biff.BiffException;
 public class BaseDeAlumnos {
     private LinkedList<Alumno> bAlumnos;
     private LinkedList<TutorAcademico> bTutoresAcademicos;
-    //private LinkedList<TutorProfesional> bTutoresProfesionales;
+    // private LinkedList<TutorProfesional> bTutoresProfesionales;
 
     public LinkedList<Alumno> getbAlumnos() {
-		return bAlumnos;
-	}
+        return bAlumnos;
+    }
 
-	public void setbAlumnos(LinkedList<Alumno> bAlumnos) {
-		this.bAlumnos = bAlumnos;
-	}
+    public void setbAlumnos(LinkedList<Alumno> bAlumnos) {
+        this.bAlumnos = bAlumnos;
+    }
 
-	public LinkedList<TutorAcademico> getbTutoresAcademicos() {
-		return bTutoresAcademicos;
-	}
+    public LinkedList<TutorAcademico> getbTutoresAcademicos() {
+        return bTutoresAcademicos;
+    }
 
-	public void setbTutoresAcademicos(LinkedList<TutorAcademico> bTutoresAcademicos) {
-		this.bTutoresAcademicos = bTutoresAcademicos;
-	}
+    public void setbTutoresAcademicos(LinkedList<TutorAcademico> bTutoresAcademicos) {
+        this.bTutoresAcademicos = bTutoresAcademicos;
+    }
 
-	public BaseDeAlumnos() {
+    public BaseDeAlumnos() {
         bAlumnos = new LinkedList<>();
         bTutoresAcademicos = new LinkedList<>();
-        //bTutoresProfesionales = new LinkedList<>();
+        // bTutoresProfesionales = new LinkedList<>();
     }
 
     public void addAlumno(Alumno alumno) {
@@ -54,9 +54,8 @@ public class BaseDeAlumnos {
         if (tAcademicoYaExistente == null) {
             bTutoresAcademicos.add(tAcademico);
             return tAcademico;
-        }
-        else {
-            bTutoresAcademicos.add(tAcademicoYaExistente);
+        } else {
+            // bTutoresAcademicos.add(tAcademicoYaExistente);
             return tAcademicoYaExistente;
         }
     }
@@ -108,10 +107,12 @@ public class BaseDeAlumnos {
             //byte ptext[] = sheet.getCell(aOrden('U'), 0).getContents().getBytes("Cp1250"); 
             //String value = new String(ptext, "Cp1250"); 
             //System.out.println(value);
-		} 
-		catch(BiffException e) {
-			e.printStackTrace();
-		}
+		}catch(
+
+    BiffException e)
+    {
+        e.printStackTrace();
+    }
     }
 
     private int aOrden(char a) {
