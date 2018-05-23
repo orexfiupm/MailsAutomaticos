@@ -37,6 +37,8 @@ public class EnviaraTA {
 			enviarCorreoAUnTutor(tAcademico, bDeAlumnos);
 			sc.nextLine();
 		}
+		sc.close();
+		System.out.println("Terminado!");
 	}
 
 	private static void enviarCorreoAUnTutor(TutorAcademico tAcademico, BaseDeAlumnos bDeAlumnos) {
@@ -44,20 +46,20 @@ public class EnviaraTA {
 
 		String subject = pc.getAsunto();
 		String attachmentRoute = pc.getAdjuntos();
-		String bodyText = pc.getTextoPersonalizado(tAcademico, null, alumnos);
+		String bodyText = pc.getTextoPersonalizado(tAcademico, null, alumnos, false, false);
 
 		System.out.println("TA: " + tAcademico.getNombre() + "\nCorreo:\n" + bodyText);
 
-//		try {
+		try {
 			// Runtime.getRuntime()
 			// 		.exec(new String[] { "thunderbird", "-compose", "to='" + tAcademico.getEmail() + "'," + "subject='"
 			// 				+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
-//			Runtime.getRuntime()
-//					.exec(new String[] { mandatoThunderbird, "-compose", "to='" + tAcademico.getEmail() + "'," + "subject='"
-//							+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
-//		} catch (IOException e1) {
-//			System.out.println("IOException");
-//			e1.printStackTrace();
-//		}
+			Runtime.getRuntime()
+					.exec(new String[] { mandatoThunderbird, "-compose", "to='" + tAcademico.getEmail() + "'," + "subject='"
+							+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
+		} catch (IOException e1) {
+			System.out.println("IOException");
+			e1.printStackTrace();
+		}
 	}
 }
