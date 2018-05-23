@@ -4,6 +4,7 @@ public class Alumno extends Persona {
     private TutorAcademico tAcademico;
     private Integer numeroMatricula;
     private String empresa;
+    private TutorProfesional tProfesional;
 
     public Alumno(String nombre, String apellidos, String email, TutorAcademico tAcademico) {
         super(nombre, apellidos, email);
@@ -14,6 +15,13 @@ public class Alumno extends Persona {
         super(nombre, apellidos, email);
         this.tAcademico = tAcademico;
         this.empresa = empresa;
+    }
+
+    public Alumno(String nombre, String apellidos, String email, TutorAcademico tAcademico, TutorProfesional tProfesional, String empresa) {
+        super(nombre, apellidos, email);
+        this.tAcademico = tAcademico;
+        this.empresa = empresa;
+        this.tProfesional = tProfesional;
     }
 
     public TutorAcademico getTutorAcademico() {
@@ -29,11 +37,13 @@ public class Alumno extends Persona {
     }
 
     public String toString() {
-        return "alumno: {" + getNombre() + " " + getApellidos() + " " + getEmail() + " " + tAcademico.toString() + "}";
+        return "alumno: {" + getNombre() + " " + getApellidos() + " " + getEmail() + " " + tAcademico.toString() + tProfesional.toString() + "}";
     }
 
-    public String toBeautifulStringSoloAlumno(boolean mostrarMatricula) {
-        return getApellidos() + ", " + getNombre() + ", email: " + getEmail() + ((getNumeroMatricula()!=null && mostrarMatricula)?(", número de matrícula: " + getNumeroMatricula()):(""));
+    public String toBeautifulStringSoloAlumno(boolean mostrarMatricula, boolean mostrarEmpresa) {
+        return getApellidos() + ", " + getNombre() + ", email: " + getEmail() 
+            + ((getNumeroMatricula()!=null && mostrarMatricula)?(", número de matrícula: " + getNumeroMatricula()):(""))
+            + ((getEmpresa()!=null && mostrarEmpresa)?(", empresa: " + getEmpresa()):(""));
     }
 
     public boolean esVacio() {
@@ -55,5 +65,13 @@ public class Alumno extends Persona {
 
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
+    }
+
+    public TutorProfesional getTutorProfesional() {
+        return this.tProfesional;
+    }
+
+    public void setTutorProfesional(TutorProfesional tProfesional) {
+        this.tProfesional = tProfesional;
     }
 }
