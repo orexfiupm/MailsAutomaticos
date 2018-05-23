@@ -2,6 +2,7 @@ package datos;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import jxl.Sheet;
@@ -12,7 +13,8 @@ import jxl.read.biff.BiffException;
 public class BaseDeAlumnos {
     private LinkedList<Alumno> bAlumnos;
     private LinkedList<TutorAcademico> bTutoresAcademicos;
-    // private LinkedList<TutorProfesional> bTutoresProfesionales;
+    private LinkedList<TutorProfesional> bTutoresProfesionales;
+    private HashMap<String, Integer> correspondenciaColumna;
 
     public LinkedList<Alumno> getbAlumnos() {
         return bAlumnos;
@@ -33,7 +35,8 @@ public class BaseDeAlumnos {
     public BaseDeAlumnos() {
         bAlumnos = new LinkedList<>();
         bTutoresAcademicos = new LinkedList<>();
-        // bTutoresProfesionales = new LinkedList<>();
+        bTutoresProfesionales = new LinkedList<>();
+        correspondenciaColumna = new HashMap<>();
     }
 
     public void addAlumno(Alumno alumno) {
@@ -60,6 +63,30 @@ public class BaseDeAlumnos {
         }
     }
 
+    public TutorProfesional addTutorProfesional(TutorProfesional tProfesional) {
+        if (tProfesional.esVacio()) {
+            return null;
+        }
+        TutorProfesional tProfesionalYaExistente = null;
+        for (TutorProfesional ta : bTutoresProfesionales) {
+            if (ta.mismo(tProfesional)) {
+                tProfesionalYaExistente = ta;
+                break;
+            }
+        }
+        if (tProfesionalYaExistente == null) {
+            bTutoresProfesionales.add(tProfesional);
+            // System.out.print("Se añade TP ");
+            // System.out.println(tProfesional.toString());
+            return tProfesional;
+        } else {
+            // bTutoresAcademicos.add(tProfesionalYaExistente);
+            // System.out.print("Se devuelve TP existente ");
+            // System.out.println(tProfesional.toString());
+            return tProfesionalYaExistente;
+        }
+    }
+
     public LinkedList<Alumno> getAlumnos() {
         return this.bAlumnos;
     }
@@ -76,26 +103,45 @@ public class BaseDeAlumnos {
     }
 
     public void getAlumnosConDestinoFromFile(String docPracticumPath) throws IOException {
-		Workbook w;
-		try {
+        Workbook w;
+        try {
             WorkbookSettings ws = new WorkbookSettings();
             // ws.setEncoding("CP1250");
             ws.setEncoding("CP1252");
             w = Workbook.getWorkbook(new File(docPracticumPath), ws);
-            Sheet sheet = w.getSheet(2); //Sheet numbers start by 1
+            Sheet sheet = w.getSheet("alumnos con destino");
 
-            for (int i=1; i<sheet.getRows(); i++) {
-                TutorAcademico tAcademico = addTutorAcademico(new TutorAcademico(sheet.getCell(aOrden('U'), i).getContents(), "", sheet.getCell(aOrden('V'), i).getContents()));
-                Alumno alumno = new Alumno(sheet.getCell(aOrden('B'), i).getContents(), sheet.getCell(aOrden('A'), i).getContents(), sheet.getCell(aOrden('C'), i).getContents(), tAcademico);
+            // Read the first row to extract the names of the columns
+            String cell;
+            for (int i = 0; i < sheet.getColumns() && ((cell = sheet.getCell(i, 0).getContents()) != null); i++) {
+                correspondenciaColumna.put(cell, i);
+            }
+
+            // Read rest of sheet to get all students and their mentors
+            for (int i = 1; i < sheet.getRows(); i++) {
+                TutorAcademico tAcademico = addTutorAcademico(
+                        new TutorAcademico(sheet.getCell(correspondenciaColumna.get("TA"), i).getContents(), "",
+                                sheet.getCell(correspondenciaColumna.get("mailTA"), i).getContents()));
+                TutorProfesional tProfesional = addTutorProfesional(
+                        new TutorProfesional(sheet.getCell(correspondenciaColumna.get("TP"), i).getContents(), "",
+                                sheet.getCell(correspondenciaColumna.get("mailTP"), i).getContents(),
+                                sheet.getCell(correspondenciaColumna.get("EMPRESA"), i).getContents(),
+                                sheet.getCell(correspondenciaColumna.get("telTP"), i).getContents()));
+                
+                Alumno alumno = new Alumno(sheet.getCell(correspondenciaColumna.get("NOMBRE"), i).getContents(),
+                        sheet.getCell(correspondenciaColumna.get("APELLIDOS"), i).getContents(),
+                        sheet.getCell(correspondenciaColumna.get("mailAlumno"), i).getContents(), tAcademico,
+                        tProfesional, sheet.getCell(correspondenciaColumna.get("EMPRESA"), i).getContents());
                 if (!alumno.esVacio()) {
                     addAlumno(alumno);
                     tAcademico.getTutorados().add(alumno);
+                    tProfesional.getTutorados().add(alumno);
                 }
-                
+
             }
 
             // for (Alumno alumno : bAlumnos) {
-            //     System.out.println(alumno.toString());
+            // System.out.println(alumno.toString());
             // }
 
             // System.out.println("Ahora tutores");
@@ -104,18 +150,22 @@ public class BaseDeAlumnos {
             //     System.out.println(tAcademico.toString());
             // }
 
-            //byte ptext[] = sheet.getCell(aOrden('U'), 0).getContents().getBytes("Cp1250"); 
-            //String value = new String(ptext, "Cp1250"); 
-            //System.out.println(value);
-		}catch(
+            // for (TutorProfesional tProfesional : bTutoresProfesionales) {
+            //     System.out.println(tProfesional.toString());
+            // }
 
-    BiffException e)
-    {
-        e.printStackTrace();
-    }
+            // byte ptext[] = sheet.getCell(aOrden('U'),
+            // 0).getContents().getBytes("Cp1250");
+            // String value = new String(ptext, "Cp1250");
+            // System.out.println(value);
+        } catch (
+
+        BiffException e) {
+            e.printStackTrace();
+        }
     }
 
-    private int aOrden(char a) {
-        return a - 'A';
-    }
+    // private int aOrden(char a) {
+    // return a - 'A';
+    // }
 }
