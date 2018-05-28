@@ -116,17 +116,17 @@ public class ParserConfiguracion {
         return null;
     }
 
-    public String getTextoPersonalizado(TutorAcademico tAcademico, TutorProfesional tProfesional, LinkedList<Alumno> alumnos) {
+    public String getTextoPersonalizado(TutorAcademico tAcademico, TutorProfesional tProfesional, LinkedList<Alumno> alumnos, boolean mostrarNumeroMatricula, boolean mostrarEmpresaAlumno) {
         String text = this.texto;
-        System.out.println(text);
+        // System.out.println(text);
         if (alumnos!=null) {
             String[] splitSecuencia = texto.split("_SECUENCIADEALUMNOS_");
             splitSecuencia[0] += "\n";
             for (Alumno alumno : alumnos) {
-                splitSecuencia[0] += "\t" + alumno.toBeautifulStringSoloAlumno(false) + "\n";
+                splitSecuencia[0] += "\t" + alumno.toBeautifulStringSoloAlumno(mostrarNumeroMatricula, mostrarEmpresaAlumno) + "\n";
             }
             text = splitSecuencia[0] + splitSecuencia[1];
-            System.out.println(text);
+            // System.out.println(text);
         }
         if (tAcademico != null && !tAcademico.esVacio()) {
             if (tAcademico.getNombre() != null) {

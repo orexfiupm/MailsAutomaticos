@@ -28,6 +28,10 @@ public class BaseDeAlumnos {
         return bTutoresAcademicos;
     }
 
+    public LinkedList<TutorProfesional> getbTutoresProfesionales() {
+        return bTutoresProfesionales;
+    }
+
     public void setbTutoresAcademicos(LinkedList<TutorAcademico> bTutoresAcademicos) {
         this.bTutoresAcademicos = bTutoresAcademicos;
     }
@@ -103,13 +107,21 @@ public class BaseDeAlumnos {
     }
 
     public void getAlumnosConDestinoFromFile(String docPracticumPath) throws IOException {
-        Workbook w;
+        Workbook w = null;
         try {
             WorkbookSettings ws = new WorkbookSettings();
             // ws.setEncoding("CP1250");
             ws.setEncoding("CP1252");
-            w = Workbook.getWorkbook(new File(docPracticumPath), ws);
+            try {
+                w = Workbook.getWorkbook(new File(docPracticumPath), ws);
+                System.out.println(docPracticumPath);
+            }
+            catch (IOException ioException) {
+                System.out.println("No se puede encontrar el fichero de alumnos. Posiblemente bdalumnos.xls no exista o no esté en el sitio adecuado.");
+                throw new IOException();
+            }
             Sheet sheet = w.getSheet("alumnos con destino");
+            
 
             // Read the first row to extract the names of the columns
             String cell;
