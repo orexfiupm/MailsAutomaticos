@@ -46,7 +46,7 @@ public class EnviaraTA {
 
 		String subject = pc.getAsunto();
 		String attachmentRoute = pc.getAdjuntos();
-		String bodyText = pc.getTextoPersonalizado(tAcademico, null, alumnos, false, false);
+		String bodyText = pc.getTextoPersonalizado(tAcademico, null, alumnos, false, true);
 
 		System.out.println("TA: " + tAcademico.getNombre() + "\nCorreo:\n" + bodyText);
 
