@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import datos.Alumno;
 import datos.TutorAcademico;
@@ -20,12 +22,13 @@ public class ParserConfiguracion {
     public ParserConfiguracion(String path) throws FileNotFoundException {
         // BufferedReader bf = new BufferedReader(new FileReader(path));
         BufferedReader bf;
-		try {
-            // bf = new BufferedReader(new InputStreamReader(new FileInputStream(path), "CP1252"));
+        try {
+            // bf = new BufferedReader(new InputStreamReader(new FileInputStream(path),
+            // "CP1252"));
             bf = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             parseConfig(bf);
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,84 +76,171 @@ public class ParserConfiguracion {
         }
     }
 
-    public String getTextoPersonalizado(TutorAcademico tAcademico, TutorProfesional tProfesional, Alumno alumno) {
-        String text = this.texto;
-        if (alumno != null && !alumno.esVacio()) {
-            if (alumno.getApellidos() != null) {
-                text = text.replace("{{APELLIDOS}}", alumno.getApellidos());
-            }
-            if (alumno.getNombre() != null) {
-                text = text.replace("{{NOMBRE}}", alumno.getNombre());
-            }
-            if (alumno.getEmail() != null) {
-                text = text.replace("{{emailalumno}}", alumno.getEmail());
-            }
-            if (alumno.getNumeroMatricula() != null) {
-                text = text.replace("{{MATRICULA}}", alumno.getNumeroMatricula().toString());
-            }
+    public String getTextoPersonalizado(TutorAcademico tAcademico, TutorProfesional tProfesional, LinkedList<Alumno> alumnos) {
+        String[] splStrings = texto.split("\\|\\|");
+        List<String> splStringsList = Arrays.asList(splStrings);
+        List<String> splStringsFinalList = new LinkedList<>();
+        for (String unit : splStringsList) {
+            System.out.println("Unit es: " + unit);
+            if (unit.startsWith("SECUENCIADEALUMNOS")) {
+                if (alumnos!=null) {
+                    String[] elemsAlumno = unit.replace("SECUENCIADEALUMNOS", "").replace("[", "").replace("]", "").split(",");
+                    String beautifulStringAlumno = "\n";
+                    for (Alumno a:alumnos) {
+                        boolean nombre = false;
+                        boolean first = true;
+                        boolean directivaAlumno = false;
+                        for (String elemAlumno:elemsAlumno) {
+                            if ((nombre && elemAlumno.equals("APELLIDOS")) || first) {
+                                if (!first) {
+                                    beautifulStringAlumno += " ";
+                                }
+                                first = false;
+                            }
+                            else {
+                                beautifulStringAlumno += ", ";
+                            }
 
+                            if (elemAlumno.equals("NOMBRE")) {
+                                if (!directivaAlumno) {
+                                    beautifulStringAlumno += "alumno: ";
+                                    directivaAlumno = true;
+                                }
+                                beautifulStringAlumno += a.getNombre();
+                                nombre = true;
+                            }
+                            if (elemAlumno.equals("APELLIDOS")) {
+                                if (!directivaAlumno) {
+                                    beautifulStringAlumno += "alumno: ";
+                                    directivaAlumno = true;
+                                }
+                                beautifulStringAlumno += a.getApellidos();
+                            }
+                            if (elemAlumno.equals("mailAlumno")) {
+                                beautifulStringAlumno += "email: " + a.getEmail();
+                            }
+                            if (elemAlumno.equals("MATRICULA")) {
+                                beautifulStringAlumno += "matrícula: " + a.getNumeroMatricula();
+                            }
+                            if (elemAlumno.equals("EMPRESA")) {
+                                beautifulStringAlumno += "empresa: " + a.getEmpresa();
+                            }
+                        }
+                        beautifulStringAlumno += "\n";
+                    }
+                    splStringsFinalList.add(beautifulStringAlumno);
+                }
+            }
+            else {
+                if (unit.equals("TA")) {
+                    if (tAcademico!=null) {
+                        unit = tAcademico.getNombre();
+                    }
+                }
+                else if (unit.equals("mailTA")) {
+                    if (tAcademico!=null) {
+                        unit = tAcademico.getEmail();
+                    }
+                }
+                else if (unit.equals("TP")) {
+                    if (tProfesional!=null) {
+                        unit = tProfesional.getNombre();
+                    }
+                }
+                else if (unit.equals("mailTP")) {
+                    if (tProfesional!=null) {
+                        unit = tProfesional.getEmail();
+                    }
+                }
+                else if (unit.equals("telTP")) {
+                    if (tProfesional!=null) {
+                        unit = tAcademico.getTelefono();
+                    }
+                }
+                else if (unit.equals("EMPRESA")) {
+                    if (tProfesional!=null) {
+                        unit = tProfesional.getEmpresa();
+                    }
+                }
+                splStringsFinalList.add(unit);
+            }
         }
-        if (tAcademico != null && !tAcademico.esVacio()) {
-            if (tAcademico.getNombre() != null) {
-                text = text.replace("{{TA}}", tAcademico.getNombre());
-            }
-            if (tAcademico.getEmail() != null) {
-                text = text.replace("{{emailalumno}}", tAcademico.getEmail());
-            }
-        }
-        if (tProfesional != null && !tProfesional.esVacio()) {
-            if (tProfesional.getEmpresa() != null) {
-                text = text.replace("{{EMPRESA}}", tProfesional.getEmpresa());
-            }
-            if (tProfesional.getNombre() != null) {
-                text = text.replace("{{TP}}", tProfesional.getNombre());
-            }
-            if (tProfesional.getEmail() != null) {
-                text = text.replace("{{emailTP}}", tProfesional.getEmail());
-            }
-            if (tProfesional.getTelefono() != null) {
-                text = text.replace("{{telTP}}", tProfesional.getTelefono());
-            }
-        }
+        splStringsFinalList.removeIf(i -> i.equals("\\|\\|"));
 
-        return null;
+        String textoRellenado = "";
+        for (String unit : splStringsFinalList) {
+            textoRellenado += unit;
+        }
+        return textoRellenado;
     }
 
-    public String getTextoPersonalizado(TutorAcademico tAcademico, TutorProfesional tProfesional, LinkedList<Alumno> alumnos, boolean mostrarNumeroMatricula, boolean mostrarEmpresaAlumno) {
-        String text = this.texto;
-        // System.out.println(text);
-        if (alumnos!=null) {
-            String[] splitSecuencia = texto.split("_SECUENCIADEALUMNOS_");
-            splitSecuencia[0] += "\n";
-            for (Alumno alumno : alumnos) {
-                splitSecuencia[0] += "\t" + alumno.toBeautifulStringSoloAlumno(mostrarNumeroMatricula, mostrarEmpresaAlumno) + "\n";
+    public String getTextoPersonalizado(TutorAcademico tAcademico, TutorProfesional tProfesional, Alumno alumno) {
+        String[] splStrings = texto.split("\\|\\|");
+        List<String> splStringsList = Arrays.asList(splStrings);
+        List<String> splStringsFinalList = new LinkedList<>();
+        for (String unit : splStringsList) {
+            if (unit.equals("NOMBRE")) {
+                if (alumno != null) {
+                    unit = alumno.getNombre();
+                }
             }
-            text = splitSecuencia[0] + splitSecuencia[1];
-            // System.out.println(text);
+            else if (unit.equals("APELLIDOS")) {
+                if (alumno != null) {
+                    unit = alumno.getApellidos();
+                }
+            }
+            else if (unit.equals("mailAlumno")) {
+                if (alumno != null) {
+                    unit = alumno.getEmail();
+                }
+            }
+            else if (unit.equals("MATRICULA")) {
+                if (alumno != null) {
+                    unit = alumno.getNumeroMatricula().toString();
+                }
+            }
+            else if (unit.equals("TA")) {
+                if (tAcademico!=null) {
+                    unit = tAcademico.getNombre();
+                }
+            }
+            else if (unit.equals("mailTA")) {
+                if (tAcademico!=null) {
+                    unit = tAcademico.getEmail();
+                }
+            }
+            else if (unit.equals("TP")) {
+                if (tProfesional!=null) {
+                    unit = tProfesional.getNombre();
+                }
+            }
+            else if (unit.equals("mailTP")) {
+                if (tProfesional!=null) {
+                    unit = tProfesional.getEmail();
+                }
+            }
+            else if (unit.equals("telTP")) {
+                if (tProfesional!=null) {
+                    unit = tAcademico.getTelefono();
+                }
+            }
+            else if (unit.equals("EMPRESA")) {
+                if (tProfesional!=null) {
+                    unit = tProfesional.getEmpresa();
+                }
+                else if (alumno!=null) {
+                    unit = alumno.getEmpresa();
+                }
+            }
+            splStringsFinalList.add(unit);
+            
         }
-        if (tAcademico != null && !tAcademico.esVacio()) {
-            if (tAcademico.getNombre() != null) {
-                text = text.replace("{{TA}}", tAcademico.getNombre());
-            }
-            if (tAcademico.getEmail() != null) {
-                text = text.replace("{{emailalumno}}", tAcademico.getEmail());
-            }
-        }
-        if (tProfesional != null && !tProfesional.esVacio()) {
-            if (tProfesional.getEmpresa() != null) {
-                text = text.replace("{{EMPRESA}}", tProfesional.getEmpresa());
-            }
-            if (tProfesional.getNombre() != null) {
-                text = text.replace("{{TP}}", tProfesional.getNombre());
-            }
-            if (tProfesional.getEmail() != null) {
-                text = text.replace("{{emailTP}}", tProfesional.getEmail());
-            }
-            if (tProfesional.getTelefono() != null) {
-                text = text.replace("{{telTP}}", tProfesional.getTelefono());
-            }
-        }
+        splStringsFinalList.removeIf(i -> i.equals("\\|\\|"));
 
-        return text;
+        String textoRellenado = "";
+        for (String unit : splStringsFinalList) {
+            textoRellenado += unit;
+        }
+        return textoRellenado;
     }
 }
