@@ -9,7 +9,6 @@ import datos.*;
 import parser.ParserConfiguracion;
 
 public class EnviaraTP {
-
 	private static ParserConfiguracion pc;
 	private static String mandatoThunderbird;
 
@@ -47,9 +46,9 @@ public class EnviaraTP {
 
 		String subject = pc.getAsunto();
 		String attachmentRoute = pc.getAdjuntos();
-		String bodyText = pc.getTextoPersonalizado(null, tProfesional, alumnos, false, false);
+		String bodyText = pc.getTextoPersonalizado(null, tProfesional, alumnos);
 
-		System.out.println("TP: " + tProfesional.getNombre() + "\nCorreo:\n" + bodyText);
+		System.out.println("TA: " + tProfesional.getNombre() + "\nCorreo:\n" + bodyText);
 
 		try {
 			// Runtime.getRuntime()
@@ -63,5 +62,4 @@ public class EnviaraTP {
 			e1.printStackTrace();
 		}
 	}
-
 }
