@@ -48,7 +48,7 @@ public class EnviaraTP {
 		String attachmentRoute = pc.getAdjuntos();
 		String bodyText = pc.getTextoPersonalizado(null, tProfesional, alumnos);
 
-		System.out.println("TA: " + tProfesional.getNombre() + "\nCorreo:\n" + bodyText);
+		System.out.println("TP: " + tProfesional.getNombre() + "\nCorreo:\n" + bodyText);
 
 		try {
 			// Runtime.getRuntime()

@@ -49,7 +49,7 @@ public class EnviaraAlumno {
 		String attachmentRoute = pc.getAdjuntos();
 		String bodyText = pc.getTextoPersonalizado(tAcademico, tProfesional, alumno);
 
-		System.out.println("TA: " + tAcademico.getNombre() + "\nCorreo:\n" + bodyText);
+		System.out.println("Alumno: " + alumno.getNombre() + "\nCorreo:\n" + bodyText);
 
 		try {
 			// Runtime.getRuntime()
