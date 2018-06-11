@@ -57,7 +57,7 @@ public class EnviaraAlumno {
 			// 				+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
 			Runtime.getRuntime()
 					.exec(new String[] { mandatoThunderbird, "-compose", "to='" + alumno.getEmail() + "'," + "subject='"
-							+ subject + "'," + "attachment='" + attachmentRoute + "'," + "body='" + bodyText + "'" });
+							+ subject + "'," + ((attachmentRoute!="")?("attachment='" + attachmentRoute):("")) + "'," + "body='" + bodyText + "'" });
 		} catch (IOException e1) {
 			System.out.println("IOException");
 			e1.printStackTrace();

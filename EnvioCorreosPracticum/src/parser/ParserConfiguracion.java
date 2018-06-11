@@ -15,7 +15,7 @@ import datos.TutorAcademico;
 import datos.TutorProfesional;
 
 public class ParserConfiguracion {
-    private String adjuntos;
+    private String adjuntos = "";
     private String texto;
     private String asunto;
 
