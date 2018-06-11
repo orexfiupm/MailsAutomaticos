@@ -1,0 +1,73 @@
+#+TITLE: Envío semiautomático de correos - Practicum
+#+AUTHOR: Luciano Garcia Giordano
+#+DATE: <2018-06-09 Sat>
+
+* Estructura de directorios
+(describir estando en OREX para estar todo correcto)
+
+* Ejecución
+1. Asegurarse de que envio/bdalumnos.xls es correcto
+   - es la versión deseada
+   - tiene extensión xls
+2. Asegurarse de que envio/envioCorreo.conf es correcto
+   - es adecuado al público al que se envía (a alumno, a TP, a TA)
+   - los ficheros adjuntos, si hay son ficheros existentes
+3. Ejecutar mediante programas/ el programa deseado. Pinchar con doble click en el nombre correspondiente al tipo de envío, pero en el fichero con extensión .bat
+   - Para cada envío se abre Thunderbird con el correo a solo un destinatario. Si hay algo mal, cambiar y enviar o cerrar la ventana sin guardar.
+   - Pulsar la tecla Enter/Intro/Nueva línea para que se genere el siguiente correo
+
+* Columnas en la hoja de cálculo
+Nota: el orden en la hoja de cálculo no importa, pero todas las columnas aquí listadas tienen que existir
+- APELLIDOS: Apellidos del alumno
+- NOMBRE: nombre del alumno
+- mailAlumno: dirección de correo electrónico del alumno
+- EMPRESA: empresa o laboratorio en que se desarrolla el Practicum
+- TA: nombre del Tutor Académico
+- mailTA: dirección de correo electrónico del Tutor Académico
+- TP: nombre del Tutor Profesional
+- mailTP: dirección de correo electrónico del Tutor Profesional
+- telTP: número de teléfono del Tutor Profesional
+
+* Fichero de configuración
+Nombre del fichero: envioCorreo.conf
+
+Localización:
+- _______ para archivo de ficheros de configuración
+- envio/ para el fichero a ser utilizado inmediatamente
+** Estructura del fichero
+ASUNTO: {asunto deseado para el correo}
+
+ADJUNTOS: {ficheros a ser adjuntados separados por comas}
+
+TEXTO: {texto que se quiera enviar, con patrones que se explican en la sección siguiente}
+
+*** Ejemplo:
+
+ASUNTO: Correo inicio al TA para avisar sus alumnos
+
+ADJUNTOS: (TODO, hacerlo con las configuraciones de OREX)
+
+TEXTO: Estimado ||TA||,
+Se envía .....................
+Los alumnos tutorados son los siguientes: ||SECUENCIADEALUMNOS[EMPRESA,APELLIDOS,NOMBRE]||
+
+** Patrones
+Se aplican directamente en la parte de texto del fichero de configuración para insertar datos de los alumnos o tutores que se sacan de la hoja de cálculo indicada.
+*** Nombre/email/teléfono
+Se utiliza ||{nombre de la característica}||. Siempre sustituye por un único valor.
+
+Ejemplo: ||TA||, ||NOMBRE||, ||mailAlumno||, ...
+*** Secuencia de alumnos
+Se usa ||SECUENCIADEALUMNOS[{características separadas por comas}]||. Sirve para incluir listados de alumnos, por ejemplo en correos direccionados a los tutores académicos o profesionales.
+
+Ejemplo: ||SECUENCIADEALUMNOS[EMPRESA,APELLIDOS,NOMBRE]||
+
+Nota: Entre APELLIDOS y NOMBRE pueden darse dos casos para que el correo quede más bien escrito:
+- NOMBRE después que APELLIDOS: se insertará una coma entre los dos
+- APELLIDOS después que NOMBRE: no se inserta coma. Solo un espacio
+** Cosas a tener en cuenta:
+La utilización de los patrones depende del programa que se ejecutará (y por tanto de la tarea a ser realizada). Si enviamos correos a tutores académicos o profesionales, los alumnos vendrán como listas, y por tanto hay que usar el patrón de secuencia para obtener su información correctamente. Si enviamos a un alumno, sus datos ya son individuales y no se utiliza el patrón de secuencia.
+
+* Diagnóstico de problemas
+** Correo aparece vacío
+Comprobar que la ruta a algún posible fichero adjunto es correcta.
