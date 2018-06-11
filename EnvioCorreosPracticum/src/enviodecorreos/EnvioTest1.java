@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import datos.Alumno;
 import datos.BaseDeAlumnos;
 import datos.TutorAcademico;
+import datos.TutorProfesional;
 import parser.ParserConfiguracion;
 
 public class EnvioTest1 {
@@ -49,8 +50,8 @@ public class EnvioTest1 {
 		String attachmentRoute = "file:///home/luciano/career_path_2016_vweb.pdf";
 		String bodyText = "<h1>Alumnos de este tutor:</h1> <p>{{SECUENCIADEALUMNOS}}</p>"; // Body can be in HTML
 
-		bodyText = pc.getTextoPersonalizado(tAcademico, null, alumnos);
-
+		bodyText = pc.getTextoPersonalizado(tAcademico, null, alumnos.getFirst());
+		
 		System.out.println("TA: " + tAcademico.getNombre() + "\nCorreo:\n" +  bodyText);
 
 		try {
