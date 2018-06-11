@@ -3,7 +3,20 @@
 #+DATE: <2018-06-09 Sat>
 
 * Estructura de directorios
-(describir estando en OREX para estar todo correcto)
+MailAutomaticos
+- envio
+  - bdalumnos.xls
+  - envio.conf
+- programas
+  - envio_a_Alumno.bat
+  - envio_a_TP
+  - envio_a_TA
+  - envioCorreoaAlumno.jar
+  - envioCorreoaTA.jar
+  - envioCoreoaTP.jar
+- leeme
+- documentacion
+- configuraciones (.conf)
 
 * Ejecución
 1. Asegurarse de que envio/bdalumnos.xls es correcto
@@ -32,8 +45,8 @@ Nota: el orden en la hoja de cálculo no importa, pero todas las columnas aquí 
 Nombre del fichero: envioCorreo.conf
 
 Localización:
-- _______ para archivo de ficheros de configuración
-- envio/ para el fichero a ser utilizado inmediatamente
+- MailAutomaticos/ para archivo de ficheros de configuración
+- MailAutomaticos/envio/ para el fichero a ser utilizado inmediatamente
 ** Estructura del fichero
 ASUNTO: {asunto deseado para el correo}
 
