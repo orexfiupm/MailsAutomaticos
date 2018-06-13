@@ -25,7 +25,7 @@ public class ParserConfiguracion {
         try {
             // bf = new BufferedReader(new InputStreamReader(new FileInputStream(path),
             // "CP1252"));
-            bf = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            bf = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
             parseConfig(bf);
         } catch (UnsupportedEncodingException e1) {
             e1.printStackTrace();
