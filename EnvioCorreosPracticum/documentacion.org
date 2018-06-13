@@ -95,3 +95,5 @@ La utilización de los patrones depende del programa que se ejecutará (y por ta
 * Diagnóstico de problemas
 ** Correo aparece vacío
 Comprobar que la ruta a algún posible fichero adjunto es correcta.
+** No abre la ventana de ejecución
+Comprobar en el fichero .bat que está siendo ejecutado si la versión de Java es la correcta.
