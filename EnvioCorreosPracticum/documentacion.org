@@ -9,8 +9,8 @@ MailAutomaticos
   - envio.conf
 - programas
   - envio_a_Alumno.bat
-  - envio_a_TP
-  - envio_a_TA
+  - envio_a_TP.bat
+  - envio_a_TA.bat
   - envioCorreoaAlumno.jar
   - envioCorreoaTA.jar
   - envioCoreoaTP.jar
@@ -30,7 +30,7 @@ MailAutomaticos
    - Pulsar la tecla Enter/Intro/Nueva línea para que se genere el siguiente correo
 
 * Columnas en la hoja de cálculo
-Nota: el orden en la hoja de cálculo no importa, pero todas las columnas aquí listadas tienen que existir
+Nota: el orden en la hoja de cálculo no importa, pero todas las columnas aquí listadas tienen que existir (aunque algunas casillas pueden estar vacías)
 - APELLIDOS: Apellidos del alumno
 - NOMBRE: nombre del alumno
 - mailAlumno: dirección de correo electrónico del alumno
@@ -54,15 +54,26 @@ ADJUNTOS: {ficheros a ser adjuntados separados por comas}
 
 TEXTO: {texto que se quiera enviar, con patrones que se explican en la sección siguiente}
 
-*** Ejemplo:
+*** Ejemplo de correo a algún tutor:
 
 ASUNTO: Correo inicio al TA para avisar sus alumnos
 
-ADJUNTOS: (TODO, hacerlo con las configuraciones de OREX)
+ADJUNTOS: C:\......
 
 TEXTO: Estimado ||TA||,
 Se envía .....................
 Los alumnos tutorados son los siguientes: ||SECUENCIADEALUMNOS[EMPRESA,APELLIDOS,NOMBRE]||
+
+*** Ejemplo de correo a algún alumno:
+
+ASUNTO: Correo inicio al alumno sobre su tutor
+
+ADJUNTOS: C:\........
+TEXTO: Estimado ||NOMBRE|| ||APELLIDOS||,
+Se envía .....................
+Su TA es ||TA||
+Su TP es ||TP||
+
 
 ** Patrones
 Se aplican directamente en la parte de texto del fichero de configuración para insertar datos de los alumnos o tutores que se sacan de la hoja de cálculo indicada.

@@ -1,0 +1,159 @@
+% Created 2018-06-13 Wed 16:55
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{Luciano Garcia Giordano}
+\date{\textit{<2018-06-09 Sat>}}
+\title{Envío semiautomático de correos - Practicum}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Estructura de directorios}
+\label{sec-1}
+MailAutomaticos
+\begin{itemize}
+\item envio
+\begin{itemize}
+\item bdalumnos.xls
+\item envio.conf
+\end{itemize}
+\item programas
+\begin{itemize}
+\item envio$_{\text{a}}$$_{\text{Alumno}}$.bat
+\item envio$_{\text{a}}$$_{\text{TP}}$.bat
+\item envio$_{\text{a}}$$_{\text{TA}}$.bat
+\item envioCorreoaAlumno.jar
+\item envioCorreoaTA.jar
+\item envioCoreoaTP.jar
+\end{itemize}
+\item leeme
+\item documentacion
+\item configuraciones (.conf)
+\end{itemize}
+
+\section{Ejecución}
+\label{sec-2}
+\begin{enumerate}
+\item Asegurarse de que envio/bdalumnos.xls es correcto
+\begin{itemize}
+\item es la versión deseada
+\item tiene extensión xls
+\end{itemize}
+\item Asegurarse de que envio/envioCorreo.conf es correcto
+\begin{itemize}
+\item es adecuado al público al que se envía (a alumno, a TP, a TA)
+\item los ficheros adjuntos, si hay son ficheros existentes
+\end{itemize}
+\item Ejecutar mediante programas/ el programa deseado. Pinchar con doble click en el nombre correspondiente al tipo de envío, pero en el fichero con extensión .bat
+\begin{itemize}
+\item Para cada envío se abre Thunderbird con el correo a solo un destinatario. Si hay algo mal, cambiar y enviar o cerrar la ventana sin guardar.
+\item Pulsar la tecla Enter/Intro/Nueva línea para que se genere el siguiente correo
+\end{itemize}
+\end{enumerate}
+
+\section{Columnas en la hoja de cálculo}
+\label{sec-3}
+Nota: el orden en la hoja de cálculo no importa, pero todas las columnas aquí listadas tienen que existir (aunque algunas casillas pueden estar vacías)
+\begin{itemize}
+\item APELLIDOS: Apellidos del alumno
+\item NOMBRE: nombre del alumno
+\item mailAlumno: dirección de correo electrónico del alumno
+\item EMPRESA: empresa o laboratorio en que se desarrolla el Practicum
+\item TA: nombre del Tutor Académico
+\item mailTA: dirección de correo electrónico del Tutor Académico
+\item TP: nombre del Tutor Profesional
+\item mailTP: dirección de correo electrónico del Tutor Profesional
+\item telTP: número de teléfono del Tutor Profesional
+\end{itemize}
+
+\section{Fichero de configuración}
+\label{sec-4}
+Nombre del fichero: envioCorreo.conf
+
+Localización:
+\begin{itemize}
+\item MailAutomaticos/ para archivo de ficheros de configuración
+\item MailAutomaticos/envio/ para el fichero a ser utilizado inmediatamente
+\end{itemize}
+\subsection{Estructura del fichero}
+\label{sec-4-1}
+ASUNTO: \{asunto deseado para el correo\}
+
+ADJUNTOS: \{ficheros a ser adjuntados separados por comas\}
+
+TEXTO: \{texto que se quiera enviar, con patrones que se explican en la sección siguiente\}
+
+\subsubsection{Ejemplo de correo a algún tutor:}
+\label{sec-4-1-1}
+
+ASUNTO: Correo inicio al TA para avisar sus alumnos
+
+ADJUNTOS: C:$\backslash$\ldots{}\ldots{}
+
+TEXTO: Estimado ||TA||,
+Se envía \ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}
+Los alumnos tutorados son los siguientes: ||SECUENCIADEALUMNOS[EMPRESA,APELLIDOS,NOMBRE]||
+
+\subsubsection{Ejemplo de correo a algún alumno:}
+\label{sec-4-1-2}
+
+ASUNTO: Correo inicio al alumno sobre su tutor
+
+ADJUNTOS: C:$\backslash$\ldots{}\ldots{}..
+TEXTO: Estimado ||NOMBRE|| ||APELLIDOS||,
+Se envía \ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}\ldots{}
+Su TA es ||TA||
+Su TP es ||TP||
+
+
+\subsection{Patrones}
+\label{sec-4-2}
+Se aplican directamente en la parte de texto del fichero de configuración para insertar datos de los alumnos o tutores que se sacan de la hoja de cálculo indicada.
+\subsubsection{Nombre/email/teléfono}
+\label{sec-4-2-1}
+Se utiliza ||\{nombre de la característica\}||. Siempre sustituye por un único valor.
+
+Ejemplo: ||TA||, ||NOMBRE||, ||mailAlumno||, \ldots{}
+\subsubsection{Secuencia de alumnos}
+\label{sec-4-2-2}
+Se usa ||SECUENCIADEALUMNOS[\{características separadas por comas\}]||. Sirve para incluir listados de alumnos, por ejemplo en correos direccionados a los tutores académicos o profesionales.
+
+Ejemplo: ||SECUENCIADEALUMNOS[EMPRESA,APELLIDOS,NOMBRE]||
+
+Nota: Entre APELLIDOS y NOMBRE pueden darse dos casos para que el correo quede más bien escrito:
+\begin{itemize}
+\item NOMBRE después que APELLIDOS: se insertará una coma entre los dos
+\item APELLIDOS después que NOMBRE: no se inserta coma. Solo un espacio
+\end{itemize}
+\subsection{Cosas a tener en cuenta:}
+\label{sec-4-3}
+La utilización de los patrones depende del programa que se ejecutará (y por tanto de la tarea a ser realizada). Si enviamos correos a tutores académicos o profesionales, los alumnos vendrán como listas, y por tanto hay que usar el patrón de secuencia para obtener su información correctamente. Si enviamos a un alumno, sus datos ya son individuales y no se utiliza el patrón de secuencia.
+
+\section{Diagnóstico de problemas}
+\label{sec-5}
+\subsection{Correo aparece vacío}
+\label{sec-5-1}
+Comprobar que la ruta a algún posible fichero adjunto es correcta.
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}
