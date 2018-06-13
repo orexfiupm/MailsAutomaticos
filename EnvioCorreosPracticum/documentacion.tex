@@ -1,4 +1,4 @@
-% Created 2018-06-13 Wed 17:09
+% Created 2018-06-13 Wed 17:21
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -163,5 +163,17 @@ Comprobar que la ruta a algún posible fichero adjunto es correcta.
 \subsection{No abre la ventana de ejecución}
 \label{sec-5-2}
 Comprobar en el fichero .bat que está siendo ejecutado si la versión de Java es la correcta.
+\section{Cambios}
+\label{sec-6}
+Tras hacer cambios en el código fuente Java, se recomienda empaquetar los .jar usando Eclipse, siguiendo los siguientes pasos:
+\begin{enumerate}
+\item Tener el proyecto montado en Eclipse
+\item Pulsar con botón derecho en el proyecto, y seleccionar exportar
+\item Elegir la opción Java/Runnable JAR File
+\item Elegir, para cada una de las tres veces que se exporta, una de las clases de programa (envio a alumno, envio a TA, envio a TP)
+\item Elegir una ruta acorde con lo que ya existe (mismo nombre que el utiliado). Se recomienda tener el directorio directo desde GitHub para hacer cambios y volver a hacer commits y así mantener online siempre una versión actualizada
+\item Elegir la opción de empaquetar las bibliotecas dentro del JAR generado
+\item Finish
+\end{enumerate}
 % Emacs 24.5.1 (Org mode 8.2.10)
 \end{document}

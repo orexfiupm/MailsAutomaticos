@@ -100,3 +100,12 @@ La utilización de los patrones depende del programa que se ejecutará (y por ta
 Comprobar que la ruta a algún posible fichero adjunto es correcta.
 ** No abre la ventana de ejecución
 Comprobar en el fichero .bat que está siendo ejecutado si la versión de Java es la correcta.
+* Cambios
+Tras hacer cambios en el código fuente Java, se recomienda empaquetar los .jar usando Eclipse, siguiendo los siguientes pasos:
+1. Tener el proyecto montado en Eclipse
+2. Pulsar con botón derecho en el proyecto, y seleccionar exportar
+3. Elegir la opción Java/Runnable JAR File
+4. Elegir, para cada una de las tres veces que se exporta, una de las clases de programa (envio a alumno, envio a TA, envio a TP)
+5. Elegir una ruta acorde con lo que ya existe (mismo nombre que el utiliado). Se recomienda tener el directorio directo desde GitHub para hacer cambios y volver a hacer commits y así mantener online siempre una versión actualizada
+6. Elegir la opción de empaquetar las bibliotecas dentro del JAR generado
+7. Finish
