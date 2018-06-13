@@ -29,7 +29,10 @@ MailAutomaticos
    - Para cada envío se abre Thunderbird con el correo a solo un destinatario. Si hay algo mal, cambiar y enviar o cerrar la ventana sin guardar.
    - Pulsar la tecla Enter/Intro/Nueva línea para que se genere el siguiente correo
 
-* Columnas en la hoja de cálculo
+* Características de la hoja de cálculo
+** Hoja
+La hoja de la que se van a coger los datos debe llamarse exactamente "alumnos con destino"
+** Columnas
 Nota: el orden en la hoja de cálculo no importa, pero todas las columnas aquí listadas tienen que existir (aunque algunas casillas pueden estar vacías)
 - APELLIDOS: Apellidos del alumno
 - NOMBRE: nombre del alumno
