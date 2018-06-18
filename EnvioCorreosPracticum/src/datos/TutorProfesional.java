@@ -5,7 +5,6 @@ import java.util.LinkedList;
 public class TutorProfesional extends Persona {
     private LinkedList<Alumno> tutorados;
     private String empresa;
-    // TODO : complementar con nombre de la empresa y todo
 
     public TutorProfesional(String nombre, String apellidos, String email, String empresa, String telefono) {
         super(nombre, apellidos, email, telefono);
