@@ -8,9 +8,9 @@ MailAutomaticos
   - bdalumnos.xls
   - envio.conf
 - programas
-  - envio_a_Alumno.bat
-  - envio_a_TP.bat
-  - envio_a_TA.bat
+  - envio-a-Alumno.bat
+  - envio-a-TP.bat
+  - envio-a-TA.bat
   - envioCorreoaAlumno.jar
   - envioCorreoaTA.jar
   - envioCoreoaTP.jar
